@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Helix — Project Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- ══════════════════════════════════════════
+       PASTE YOUR FULLSTORY SNIPPET BELOW
+  ══════════════════════════════════════════ -->
+  <script>
+    window['_fs_host'] = 'fullstory.com';
+    window['_fs_script'] = 'edge.fullstory.com/s/fs.js';
+    window['_fs_org'] = 'o-2198CH-na1';
+    window['_fs_namespace'] = 'FS';
+    !function(m,n,e,t,l,o,g,y){var s,f,a=function(h){
+    return!(h in m)||(m.console&&m.console.log&&m.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].'),!1)}(e)
+    ;function p(b){var h,d=[];function j(){h&&(d.forEach((function(b){var d;try{d=b[h[0]]&&b[h[0]](h[1])}catch(h){return void(b[3]&&b[3](h))}
+    d&&d.then?d.then(b[2],b[3]):b[2]&&b[2](d)})),d.length=0)}function r(b){return function(d){h||(h=[b,d],j())}}return b(r(0),r(1)),{
+    then:function(b,h){return p((function(r,i){d.push([b,h,r,i]),j()}))}}}a&&(g=m[e]=function(){var b=function(b,d,j,r){function i(i,c){
+    h(b,d,j,i,c,r)}r=r||2;var c,u=/Async$/;return u.test(b)?(b=b.replace(u,""),"function"==typeof Promise?new Promise(i):p(i)):h(b,d,j,c,c,r)}
+    ;function h(h,d,j,r,i,c){return b._api?b._api(h,d,j,r,i,c):(b.q&&b.q.push([h,d,j,r,i,c]),null)}return b.q=[],b}(),y=function(b){function h(h){
+    "function"==typeof h[4]&&h[4](new Error(b))}var d=g.q;if(d){for(var j=0;j<d.length;j++)h(d[j]);d.length=0,d.push=h}},function(){
+    (o=n.createElement(t)).async=!0,o.crossOrigin="anonymous",o.src="https://"+l,o.onerror=function(){y("Error loading "+l)}
+    ;var b=n.getElementsByTagName(t)[0];b&&b.parentNode?b.parentNode.insertBefore(o,b):n.head.appendChild(o)}(),function(){function b(){}
+    function h(b,h,d){g(b,h,d,1)}function d(b,d,j){h("setProperties",{type:b,properties:d},j)}function j(b,h){d("user",b,h)}function r(b,h,d){j({
+    uid:b},d),h&&j(h,d)}g.identify=r,g.setUserVars=j,g.identifyAccount=b,g.clearUserCookie=b,g.setVars=d,g.event=function(b,d,j){h("trackEvent",{
+    name:b,properties:d},j)},g.anonymize=function(){r(!1)},g.shutdown=function(){h("shutdown")},g.restart=function(){h("restart")},
+    g.log=function(b,d){h("log",{level:b,msg:d})},g.consent=function(b){h("setIdentity",{consent:!arguments.length||b})}}(),s="fetch",
+    f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){return g._w[s].apply(this,arguments)}),g._v="2.0.0")
+    }(window,document,window._fs_namespace,"script",window._fs_script);
+  </script>
+
+  <!-- ══════════════════════════════════════════ -->
+
+  <style>
+    /* ── Reset & tokens ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #080812;
+      --surface:      #0f0f1e;
+      --surface-2:    #16162a;
+      --border:       rgba(255,255,255,0.07);
+      --border-h:     rgba(255,255,255,0.13);
+      --primary:      #6366f1;
+      --primary-dim:  rgba(99,102,241,0.13);
+      --primary-glow: rgba(99,102,241,0.28);
+      --cyan:         #06b6d4;
+      --cyan-dim:     rgba(6,182,212,0.11);
+      --emerald:      #10b981;
+      --emerald-dim:  rgba(16,185,129,0.11);
+      --amber:        #f59e0b;
+      --amber-dim:    rgba(245,158,11,0.11);
+      --red:          #ef4444;
+      --red-dim:      rgba(239,68,68,0.11);
+      --fs-blue:      #1e6aff;
+      --fs-blue-dim:  rgba(30,106,255,0.10);
+      --text:         #e8eaf0;
+      --text-dim:     #9ca3af;
+      --text-muted:   #6b7280;
+      --nav-h:        60px;
+      --sidebar-w:    220px;
+      --ease:         cubic-bezier(0.22, 1, 0.36, 1);
+      --r:            12px;
+      --r-sm:         8px;
+    }
+
+    html, body { height: 100%; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    /* Faint grid */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(99,102,241,0.028) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99,102,241,0.028) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none; z-index: 0;
+    }
+
+    /* Ambient top-left bloom */
+    body::after {
+      content: '';
+      position: fixed;
+      top: -180px; left: -80px;
+      width: 560px; height: 560px;
+      background: radial-gradient(circle, rgba(99,102,241,0.055) 0%, transparent 68%);
+      pointer-events: none; z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: rgba(8,8,18,0.72);
+      backdrop-filter: blur(24px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center;
+      padding: 0 20px 0 24px; gap: 8px; z-index: 100;
+    }
+
+    .nav-logo {
+      display: flex; align-items: center; gap: 9px;
+      text-decoration: none; margin-right: 12px; flex-shrink: 0;
+    }
+
+    .nav-logo svg { width: 30px; height: 30px; }
+
+    .nav-wordmark {
+      font-family: 'Syne', sans-serif;
+      font-size: 17px; font-weight: 700; letter-spacing: -0.3px;
+      background: linear-gradient(135deg, #a5b4fc 0%, #67e8f9 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-links { display: flex; gap: 2px; flex: 1; }
+
+    .nav-link {
+      padding: 5px 13px; border-radius: var(--r-sm);
+      font-size: 13.5px; font-weight: 500; color: var(--text-muted);
+      cursor: pointer; border: none; background: none;
+      font-family: 'DM Sans', sans-serif; transition: all 0.15s;
+    }
+    .nav-link:hover { color: var(--text-dim); background: rgba(255,255,255,0.04); }
+    .nav-link.active { color: var(--text); background: rgba(255,255,255,0.06); }
+
+    .nav-actions { display: flex; align-items: center; gap: 8px; }
+
+    .nav-btn {
+      display: flex; align-items: center; gap: 6px;
+      padding: 6px 13px; border-radius: var(--r-sm);
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      border: 1px solid; font-family: 'DM Sans', sans-serif;
+      transition: all 0.18s; letter-spacing: 0.1px;
+    }
+
+    .nav-btn-q {
+      border-color: rgba(6,182,212,0.22); background: rgba(6,182,212,0.06); color: #67e8f9;
+    }
+    .nav-btn-q:hover { border-color: rgba(6,182,212,0.48); background: rgba(6,182,212,0.12); }
+
+    .nav-btn-e {
+      border-color: rgba(239,68,68,0.22); background: rgba(239,68,68,0.06); color: #fca5a5;
+    }
+    .nav-btn-e:hover { border-color: rgba(239,68,68,0.48); background: rgba(239,68,68,0.12); }
+
+    .nav-sep { width: 1px; height: 20px; background: var(--border); margin: 0 4px; }
+
+    .avatar {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--cyan));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; font-family: 'Syne', sans-serif;
+      cursor: pointer; letter-spacing: 0.5px; flex-shrink: 0;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      position: fixed; top: var(--nav-h); left: 0; bottom: 0;
+      width: var(--sidebar-w); border-right: 1px solid var(--border);
+      padding: 20px 10px; display: flex; flex-direction: column;
+      gap: 2px; z-index: 50; background: rgba(8,8,18,0.5);
+      overflow-y: auto;
+    }
+
+    .sidebar::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 60px;
+      background: linear-gradient(transparent, rgba(8,8,18,0.92));
+      pointer-events: none;
+    }
+
+    .s-section {
+      padding: 12px 10px 4px;
+      font-size: 10px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 1.2px;
+      color: var(--text-muted); font-family: 'Syne', sans-serif;
+    }
+
+    .s-item {
+      display: flex; align-items: center; gap: 9px;
+      padding: 7px 10px; border-radius: var(--r-sm);
+      font-size: 13.5px; font-weight: 500; color: var(--text-muted);
+      cursor: pointer; transition: all 0.15s; position: relative;
+    }
+    .s-item:hover { background: rgba(255,255,255,0.04); color: var(--text-dim); }
+    .s-item.active { background: var(--primary-dim); color: #a5b4fc; }
+    .s-item.active::before {
+      content: ''; position: absolute; left: 0; top: 20%; bottom: 20%;
+      width: 2px; background: var(--primary); border-radius: 2px;
+    }
+
+    .s-notif { width: 5px; height: 5px; border-radius: 50%; background: var(--primary); margin-left: auto; }
+
+    /* ── MAIN ── */
+    main {
+      margin-top: var(--nav-h); margin-left: var(--sidebar-w);
+      padding: 32px 36px; position: relative; z-index: 1;
+      min-height: calc(100vh - var(--nav-h));
+    }
+
+    .page-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; margin-bottom: 28px;
+    }
+
+    .page-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 22px; font-weight: 700; letter-spacing: -0.5px;
+    }
+    .page-sub { font-size: 13.5px; color: var(--text-muted); margin-top: 4px; }
+
+    .btn-page {
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 16px; border-radius: var(--r-sm);
+      border: 1px solid var(--border); background: transparent;
+      color: var(--text-dim); font-size: 13px; font-weight: 500;
+      font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.18s;
+    }
+    .btn-page:hover { background: rgba(255,255,255,0.05); border-color: var(--border-h); color: var(--text); }
+
+    /* ── Metrics ── */
+    .metrics {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 16px; margin-bottom: 24px;
+    }
+
+    .m-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 20px 22px;
+      position: relative; overflow: hidden; transition: border-color 0.2s;
+      animation: fadeUp 0.5s var(--ease) both;
+    }
+    .m-card:nth-child(1) { animation-delay: 0.05s; }
+    .m-card:nth-child(2) { animation-delay: 0.10s; }
+    .m-card:nth-child(3) { animation-delay: 0.15s; }
+    .m-card:nth-child(4) { animation-delay: 0.20s; }
+    .m-card:hover { border-color: var(--border-h); }
+    .m-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent);
+    }
+
+    .m-label {
+      font-size: 10.5px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      color: var(--text-muted); margin-bottom: 10px;
+    }
+    .m-value {
+      font-family: 'Syne', sans-serif;
+      font-size: 32px; font-weight: 800; letter-spacing: -1.5px; line-height: 1;
+    }
+    .m-delta { font-size: 11.5px; margin-top: 8px; }
+    .up   { color: var(--emerald); }
+    .down { color: var(--text-muted); }
+
+    /* ── Content grid ── */
+    .c-grid { display: grid; grid-template-columns: 1fr 310px; gap: 20px; }
+
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--r); overflow: hidden; position: relative;
+      animation: fadeUp 0.5s var(--ease) 0.25s both;
+    }
+    .card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent);
+    }
+
+    .c-head {
+      padding: 16px 20px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .c-title { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; }
+
+    /* ── Badges ── */
+    .badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 3px 9px; border-radius: 20px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.2px;
+    }
+    .b-indigo  { background: var(--primary-dim);  color: #a5b4fc; }
+    .b-cyan    { background: var(--cyan-dim);      color: #67e8f9; }
+    .b-amber   { background: var(--amber-dim);     color: #fcd34d; }
+    .b-red     { background: var(--red-dim);       color: #fca5a5; }
+    .b-emerald { background: var(--emerald-dim);   color: #6ee7b7; }
+
+    .live-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: currentColor; animation: blink 1.5s ease-in-out infinite;
+    }
+
+    /* ── Table ── */
+    table { width: 100%; border-collapse: collapse; }
+    thead th {
+      padding: 10px 20px; font-size: 10.5px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted);
+      text-align: left; border-bottom: 1px solid var(--border);
+    }
+    tbody td {
+      padding: 13px 20px; font-size: 13.5px;
+      border-bottom: 1px solid var(--border); transition: background 0.12s;
+    }
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover td { background: rgba(255,255,255,0.02); }
+
+    .t-id {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px; color: var(--text-muted); font-weight: 500;
+    }
+
+    /* ── Activity ── */
+    .act-list { padding: 6px 0; }
+    .act-item {
+      display: flex; gap: 11px; padding: 11px 18px;
+      align-items: flex-start; transition: background 0.12s;
+    }
+    .act-item:hover { background: rgba(255,255,255,0.02); }
+
+    .act-icon {
+      width: 28px; height: 28px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; flex-shrink: 0; margin-top: 1px;
+    }
+    .act-text { font-size: 13px; color: var(--text-dim); line-height: 1.45; }
+    .act-text strong { color: var(--text); font-weight: 600; }
+    .act-time { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+
+    /* ── Chat FAB ── */
+    .fab {
+      position: fixed; bottom: 28px; right: 28px; z-index: 200;
+      display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
+    }
+
+    .fab-label {
+      display: flex; align-items: center; gap: 7px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 20px; padding: 6px 14px;
+      font-size: 13px; color: var(--text-dim);
+      white-space: nowrap;
+      animation: fadeUp 0.5s var(--ease) 1.2s both;
+    }
+
+    .fab-btn {
+      width: 54px; height: 54px; border-radius: 50%;
+      background: linear-gradient(135deg, #6366f1 0%, #818cf8 100%);
+      border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 32px rgba(99,102,241,0.42);
+      transition: transform 0.2s var(--ease), box-shadow 0.2s;
+      position: relative;
+    }
+    .fab-btn:hover { transform: scale(1.07); box-shadow: 0 12px 40px rgba(99,102,241,0.55); }
+    .fab-btn:active { transform: scale(0.97); }
+
+    .ring {
+      position: absolute; inset: -1px; border-radius: 50%;
+      border: 1.5px solid rgba(99,102,241,0.45);
+      animation: ringOut 2.4s ease-out infinite;
+    }
+    .ring:nth-child(2) { animation-delay: 0.85s; }
+
+    /* ── OVERLAY & PANEL ── */
+    .overlay {
+      position: fixed; inset: 0;
+      background: rgba(4,4,12,0.68);
+      backdrop-filter: blur(8px);
+      z-index: 300; opacity: 0; pointer-events: none; transition: opacity 0.3s;
+    }
+    .overlay.open { opacity: 1; pointer-events: all; }
+
+    .panel {
+      position: fixed; top: 0; right: 0; bottom: 0; width: 480px;
+      background: var(--surface); border-left: 1px solid var(--border);
+      z-index: 400; display: flex; flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.38s var(--ease); overflow: hidden;
+    }
+    .panel.open { transform: translateX(0); }
+
+    /* Panel header */
+    .p-head {
+      padding: 22px 24px 20px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: flex-start; justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .p-head-info { display: flex; flex-direction: column; gap: 6px; }
+    .p-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 19px; font-weight: 700; letter-spacing: -0.4px;
+    }
+    .p-sub { font-size: 13px; color: var(--text-muted); }
+
+    .close-btn {
+      width: 30px; height: 30px; border-radius: 8px;
+      border: 1px solid var(--border); background: transparent;
+      color: var(--text-muted); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; transition: all 0.15s; flex-shrink: 0; margin-top: 2px;
+    }
+    .close-btn:hover { background: rgba(255,255,255,0.06); border-color: var(--border-h); color: var(--text); }
+
+    /* Panel body */
+    .p-body {
+      flex: 1; overflow-y: auto; padding: 20px 24px;
+      display: flex; flex-direction: column; gap: 14px;
+      scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.1) transparent;
+    }
+
+    /* ── Fullstory section ── */
+    .fs-box {
+      border: 1px solid rgba(30,106,255,0.22);
+      border-radius: var(--r); overflow: hidden;
+      background: rgba(30,106,255,0.03);
+    }
+
+    .fs-head {
+      padding: 11px 16px; display: flex; align-items: center; gap: 9px;
+      border-bottom: 1px solid rgba(30,106,255,0.12);
+      background: rgba(30,106,255,0.05);
+    }
+
+    .fs-mark {
+      width: 22px; height: 22px; border-radius: 6px;
+      background: var(--fs-blue); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .fs-brand {
+      font-family: 'Syne', sans-serif;
+      font-size: 12px; font-weight: 700; color: #7eb3ff; letter-spacing: 0.3px;
+    }
+
+    .fs-sublabel { font-size: 11px; color: rgba(126,179,255,0.55); margin-left: 1px; }
+
+    .fs-live {
+      margin-left: auto; display: flex; align-items: center;
+      gap: 6px; font-size: 11px; color: var(--emerald); font-weight: 600;
+    }
+    .fs-live-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--emerald); animation: blink 1.2s ease-in-out infinite;
+    }
+
+    .sess-fields { padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; }
+
+    .f-label {
+      font-size: 10.5px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.8px; color: rgba(126,179,255,0.65); margin-bottom: 5px;
+    }
+
+    .f-row {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(0,0,0,0.22);
+      border: 1px solid rgba(30,106,255,0.14);
+      border-radius: var(--r-sm); padding: 9px 12px;
+    }
+
+    .f-val {
+      flex: 1; font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px; color: #93c5fd; word-break: break-all;
+      line-height: 1.5; min-width: 0;
+    }
+    .f-val.amber { color: var(--amber); }
+
+    .copy-btn {
+      padding: 4px 10px; border-radius: 6px;
+      border: 1px solid rgba(30,106,255,0.2);
+      background: rgba(30,106,255,0.08); color: #7eb3ff;
+      font-size: 11px; font-weight: 500; cursor: pointer;
+      white-space: nowrap; transition: all 0.18s; flex-shrink: 0;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .copy-btn:hover { background: rgba(30,106,255,0.18); border-color: rgba(30,106,255,0.38); }
+    .copy-btn.ok { background: var(--emerald-dim); border-color: rgba(16,185,129,0.32); color: #6ee7b7; }
+
+    /* ── API section ── */
+    .api-box {
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--r); overflow: hidden;
+    }
+
+    .api-head {
+      padding: 12px 16px; display: flex; align-items: center;
+      justify-content: space-between; cursor: pointer; user-select: none;
+      transition: background 0.15s;
+    }
+    .api-head:hover { background: rgba(255,255,255,0.03); }
+
+    .api-head-l { display: flex; align-items: center; gap: 8px; }
+
+    .method {
+      padding: 2px 8px; border-radius: 5px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; font-weight: 700;
+      background: var(--emerald-dim); color: #6ee7b7; letter-spacing: 0.5px;
+    }
+
+    .api-head-title { font-size: 13px; font-weight: 600; color: var(--text-dim); }
+
+    .chevron { color: var(--text-muted); transition: transform 0.25s var(--ease); }
+    .chevron.open { transform: rotate(180deg); }
+
+    .api-collapse {
+      display: grid; grid-template-rows: 0fr;
+      transition: grid-template-rows 0.32s var(--ease);
+    }
+    .api-collapse.open { grid-template-rows: 1fr; }
+    .api-collapse-inner { overflow: hidden; }
+
+    .api-url {
+      padding: 8px 16px; border-top: 1px solid var(--border);
+      background: rgba(0,0,0,0.18);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; color: var(--text-muted);
+    }
+    .api-url span { color: var(--amber); }
+
+    .api-pre {
+      padding: 14px 16px; background: rgba(0,0,0,0.12);
+      border-top: 1px solid var(--border);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px; line-height: 1.65; overflow-x: auto;
+    }
+
+    .jk { color: #a5b4fc; }
+    .js { color: #86efac; }
+    .jn { color: #fde68a; }
+
+    /* ── Integrations ── */
+    .sec-label {
+      font-size: 10.5px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.8px; color: var(--text-muted); margin-bottom: 10px;
+    }
+
+    .int-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+
+    .int-btn {
+      display: flex; flex-direction: column; align-items: center; gap: 7px;
+      padding: 13px 8px; border-radius: var(--r-sm);
+      border: 1px solid var(--border); background: var(--surface-2);
+      color: var(--text-muted); font-size: 12px; font-weight: 500;
+      font-family: 'DM Sans', sans-serif; cursor: pointer;
+      transition: all 0.18s;
+    }
+    .int-btn:hover {
+      border-color: var(--border-h); background: rgba(255,255,255,0.04);
+      color: var(--text); transform: translateY(-1px);
+    }
+    .int-btn:active { transform: translateY(0); }
+    .int-icon { font-size: 20px; line-height: 1; }
+
+    /* ── Panel footer ── */
+    .p-foot {
+      padding: 16px 24px; border-top: 1px solid var(--border);
+      display: flex; gap: 10px; flex-shrink: 0;
+    }
+
+    .btn-cancel {
+      padding: 9px 18px; border-radius: var(--r-sm);
+      border: 1px solid var(--border); background: transparent;
+      color: var(--text-muted); font-size: 13.5px; font-weight: 500;
+      font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.15s;
+    }
+    .btn-cancel:hover { background: rgba(255,255,255,0.04); color: var(--text-dim); }
+
+    .btn-submit {
+      flex: 1; padding: 9px; border-radius: var(--r-sm);
+      border: none; background: var(--primary); color: white;
+      font-size: 13.5px; font-weight: 600;
+      font-family: 'DM Sans', sans-serif; cursor: pointer;
+      transition: all 0.18s; letter-spacing: 0.1px;
+    }
+    .btn-submit:hover { background: #5254cc; box-shadow: 0 4px 16px rgba(99,102,241,0.28); }
+    .btn-submit:active { transform: scale(0.99); }
+
+    /* ── Toasts ── */
+    .toast-wrap {
+      position: fixed; bottom: 24px; left: 50%;
+      transform: translateX(-50%); z-index: 600;
+      display: flex; flex-direction: column-reverse; gap: 8px;
+      align-items: center; pointer-events: none;
+    }
+
+    .toast {
+      display: flex; align-items: center; gap: 9px;
+      padding: 10px 18px; background: var(--surface-2);
+      border: 1px solid var(--border); border-radius: var(--r);
+      font-size: 13.5px; font-weight: 500; color: var(--text-dim);
+      white-space: nowrap; box-shadow: 0 8px 32px rgba(0,0,0,0.38);
+      animation: toastIn 0.35s var(--ease) both; pointer-events: all;
+    }
+    .toast.out { animation: toastOut 0.3s var(--ease) both; }
+
+    /* ── Keyframes ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; } 50% { opacity: 0.35; }
+    }
+    @keyframes ringOut {
+      0%   { transform: scale(1);   opacity: 0.65; }
+      100% { transform: scale(2.3); opacity: 0; }
+    }
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateY(18px) scale(0.95); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes toastOut {
+      from { opacity: 1; transform: translateY(0) scale(1); }
+      to   { opacity: 0; transform: translateY(10px) scale(0.95); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════ NAV ═══════ -->
+<nav>
+  <a class="nav-logo" href="#">
+    <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="lg" x1="0" y1="0" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#6366f1"/><stop offset="1" stop-color="#06b6d4"/>
+        </linearGradient>
+      </defs>
+      <rect width="30" height="30" rx="8" fill="url(#lg)"/>
+      <path d="M7 15 Q10 9 15 15 Q20 21 23 15" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <path d="M7 11 Q10 5  15 11 Q20 17 23 11" stroke="rgba(255,255,255,0.38)" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+      <path d="M7 19 Q10 13 15 19 Q20 25 23 19" stroke="rgba(255,255,255,0.38)" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+    </svg>
+    <span class="nav-wordmark">Helix</span>
+  </a>
+
+  <div class="nav-links">
+    <button class="nav-link active">Dashboard</button>
+    <button class="nav-link">Projects</button>
+    <button class="nav-link">Analytics</button>
+    <button class="nav-link">Team</button>
+  </div>
+
+  <div class="nav-actions">
+    <button class="nav-btn nav-btn-q" onclick="openPanel('question')">
+      <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+        <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.3"/>
+        <path d="M5.5 5.5a1.5 1.5 0 012.8.75c0 .9-.75 1.25-1.3 1.5V8.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+        <circle cx="7" cy="10.5" r=".7" fill="currentColor"/>
+      </svg>
+      Ask a Question
+    </button>
+    <button class="nav-btn nav-btn-e" onclick="openPanel('error')">
+      <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+        <path d="M7 1.5L12.5 11.5H1.5L7 1.5Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+        <path d="M7 5.5V8M7 10h.01" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+      </svg>
+      Report Error
+    </button>
+    <div class="nav-sep"></div>
+    <div class="avatar">JD</div>
+  </div>
+</nav>
+
+<!-- ═══════ SIDEBAR ═══════ -->
+<aside class="sidebar">
+  <div class="s-section">Workspace</div>
+  <div class="s-item active"><span>⊞</span> Dashboard</div>
+  <div class="s-item"><span>◫</span> My Work</div>
+  <div class="s-item"><span>◉</span> Inbox <span class="s-notif"></span></div>
+
+  <div class="s-section">Projects</div>
+  <div class="s-item"><span>▸</span> Product v2.0</div>
+  <div class="s-item"><span>▸</span> Marketing Site</div>
+  <div class="s-item"><span>▸</span> Mobile App</div>
+
+  <div class="s-section">Reports</div>
+  <div class="s-item"><span>◈</span> Velocity</div>
+  <div class="s-item"><span>◈</span> Burndown</div>
+</aside>
+
+<!-- ═══════ MAIN ═══════ -->
+<main>
+  <div class="page-header">
+    <div>
+      <div class="page-title">Good morning, Jordan 👋</div>
+      <div class="page-sub">Here's what's happening across your workspace today</div>
+    </div>
+    <button class="btn-page" onclick="openPanel('question')">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+        <path d="M6.5 1v11M1 6.5h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      New Ticket
+    </button>
+  </div>
+
+  <div class="metrics">
+    <div class="m-card">
+      <div class="m-label">Open Tickets</div>
+      <div class="m-value">24</div>
+      <div class="m-delta down">↑ 3 from yesterday</div>
+    </div>
+    <div class="m-card">
+      <div class="m-label">Resolved (7d)</div>
+      <div class="m-value">142</div>
+      <div class="m-delta up">↑ 12% vs last week</div>
+    </div>
+    <div class="m-card">
+      <div class="m-label">Avg Response</div>
+      <div class="m-value">1.8h</div>
+      <div class="m-delta up">↓ 22 min faster</div>
+    </div>
+    <div class="m-card">
+      <div class="m-label">CSAT Score</div>
+      <div class="m-value">94%</div>
+      <div class="m-delta up">↑ 2% this month</div>
+    </div>
+  </div>
+
+  <div class="c-grid">
+    <!-- Tickets -->
+    <div class="card">
+      <div class="c-head">
+        <span class="c-title">Recent Tickets</span>
+        <span class="badge b-indigo">24 open</span>
+      </div>
+      <table>
+        <thead><tr><th>ID</th><th>Issue</th><th>Status</th><th>Priority</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="t-id">#4821</span></td>
+            <td>Login redirect loop on SSO</td>
+            <td><span class="badge b-red">Open</span></td>
+            <td><span class="badge b-red">High</span></td>
+          </tr>
+          <tr>
+            <td><span class="t-id">#4819</span></td>
+            <td>Dashboard charts not loading</td>
+            <td><span class="badge b-amber">In Progress</span></td>
+            <td><span class="badge b-amber">Medium</span></td>
+          </tr>
+          <tr>
+            <td><span class="t-id">#4814</span></td>
+            <td>Export CSV missing columns</td>
+            <td><span class="badge b-indigo">Review</span></td>
+            <td><span class="badge b-amber">Medium</span></td>
+          </tr>
+          <tr>
+            <td><span class="t-id">#4810</span></td>
+            <td>Notification emails delayed</td>
+            <td><span class="badge b-emerald">Resolved</span></td>
+            <td><span class="badge b-indigo">Low</span></td>
+          </tr>
+          <tr>
+            <td><span class="t-id">#4807</span></td>
+            <td>API rate limit hitting unexpectedly</td>
+            <td><span class="badge b-amber">In Progress</span></td>
+            <td><span class="badge b-red">High</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Activity -->
+    <div class="card">
+      <div class="c-head">
+        <span class="c-title">Activity</span>
+        <span class="badge b-cyan"><span class="live-dot"></span> Live</span>
+      </div>
+      <div class="act-list">
+        <div class="act-item">
+          <div class="act-icon" style="background:rgba(16,185,129,0.12)">✓</div>
+          <div><div class="act-text"><strong>Sarah K.</strong> resolved #4810 — Notification delays fixed</div><div class="act-time">2 min ago</div></div>
+        </div>
+        <div class="act-item">
+          <div class="act-icon" style="background:rgba(245,158,11,0.12)">⚑</div>
+          <div><div class="act-text"><strong>Mike R.</strong> escalated #4821 to high priority</div><div class="act-time">14 min ago</div></div>
+        </div>
+        <div class="act-item">
+          <div class="act-icon" style="background:rgba(99,102,241,0.12)">+</div>
+          <div><div class="act-text">New ticket #4822 — <strong>Webhook delivery failures</strong></div><div class="act-time">31 min ago</div></div>
+        </div>
+        <div class="act-item">
+          <div class="act-icon" style="background:rgba(6,182,212,0.12)">↺</div>
+          <div><div class="act-text"><strong>Alex T.</strong> updated #4814 status to Review</div><div class="act-time">1h ago</div></div>
+        </div>
+        <div class="act-item">
+          <div class="act-icon" style="background:rgba(239,68,68,0.12)">!</div>
+          <div><div class="act-text">Automated alert: Error spike detected in prod API</div><div class="act-time">2h ago</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ═══════ CHAT FAB ═══════ -->
+<div class="fab">
+  <div class="fab-label">
+    <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+      <circle cx="5" cy="5" r="4.5" stroke="#10b981" stroke-width="1"/>
+      <circle cx="5" cy="5" r="2.5" fill="#10b981" opacity=".55"/>
+    </svg>
+    Chat with Support
+  </div>
+  <button class="fab-btn" onclick="openPanel('chat')" aria-label="Open support chat">
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+      <path d="M20 13a2 2 0 01-2 2H6l-4 4V4a2 2 0 012-2h14a2 2 0 012 2v9z"
+        stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+        fill="rgba(255,255,255,0.1)"/>
+    </svg>
+  </button>
+</div>
+
+<!-- ═══════ OVERLAY ═══════ -->
+<div class="overlay" id="overlay" onclick="closePanel()"></div>
+
+<!-- ═══════ PANEL ═══════ -->
+<div class="panel" id="panel">
+  <div class="p-head">
+    <div class="p-head-info">
+      <span class="badge" id="p-badge"></span>
+      <div class="p-title" id="p-title"></div>
+      <div class="p-sub" id="p-sub"></div>
+    </div>
+    <button class="close-btn" onclick="closePanel()">✕</button>
+  </div>
+
+  <div class="p-body">
+    <!-- Fullstory -->
+    <div class="fs-box">
+      <div class="fs-head">
+        <div class="fs-mark">
+          <!-- Fullstory "F" letterform -->
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="white">
+            <path d="M2 2h9v2.2H4.3v2H8v2.2H4.3V11H2V2z"/>
+          </svg>
+        </div>
+        <span class="fs-brand">Fullstory</span>
+        <span class="fs-sublabel">Session Intelligence</span>
+        <div class="fs-live"><div class="fs-live-dot"></div>Live</div>
+      </div>
+      <div class="sess-fields">
+        <div>
+          <div class="f-label">Session URL</div>
+          <div class="f-row">
+            <span class="f-val" id="sess-url">Generating…</span>
+            <button class="copy-btn" onclick="doCopy('sess-url', this)">Copy</button>
+          </div>
+        </div>
+        <div>
+          <div class="f-label">Session ID</div>
+          <div class="f-row">
+            <span class="f-val" id="sess-id">Generating…</span>
+            <button class="copy-btn" onclick="doCopy('sess-id', this)">Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- API payload -->
+    <div class="api-box">
+      <div class="api-head" onclick="toggleApi()">
+        <div class="api-head-l">
+          <span class="method">POST</span>
+          <span class="api-head-title">REST API Payload</span>
+        </div>
+        <svg class="chevron" id="chev" width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="api-collapse" id="api-col">
+        <div class="api-collapse-inner">
+          <div class="api-url">POST <span>https://api.yoursystem.com/v1/support-events</span></div>
+          <div class="api-pre" id="api-payload"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Integrations -->
+    <div>
+      <div class="sec-label">Send to Integration</div>
+      <div class="int-grid">
+        <button class="int-btn" onclick="sendTo('Zendesk')">   <span class="int-icon">🎫</span>Zendesk</button>
+        <button class="int-btn" onclick="sendTo('Salesforce')"><span class="int-icon">☁️</span>Salesforce</button>
+        <button class="int-btn" onclick="sendTo('Jira')">      <span class="int-icon">◆</span>Jira</button>
+        <button class="int-btn" onclick="sendTo('Slack')">     <span class="int-icon">#</span>Slack</button>
+        <button class="int-btn" onclick="sendTo('HubSpot')">   <span class="int-icon">⚙</span>HubSpot</button>
+        <button class="int-btn" onclick="sendTo('Custom API')"><span class="int-icon">→</span>Custom</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="p-foot">
+    <button class="btn-cancel" onclick="closePanel()">Cancel</button>
+    <button class="btn-submit" id="sub-btn">Submit</button>
+  </div>
+</div>
+
+<!-- ═══════ TOASTS ═══════ -->
+<div class="toast-wrap" id="toasts"></div>
+
+<script>
+  /* ── Fullstory helpers ── */
+  function getSessionURL() {
+    try {
+      if (typeof FS === 'function') return FS('getSession', { format: 'url.now' });
+      if (typeof FS !== 'undefined' && FS.getCurrentSessionURL) return FS.getCurrentSessionURL(true);
+    } catch(e) {}
+    return null;
+  }
+
+  function getSessionID() {
+    try {
+      if (typeof FS === 'function') return FS('getSession', { format: 'id' });
+    } catch(e) {}
+    const url = getSessionURL();
+    if (url) { const m = url.match(/sessions\/([^?#]+)/); if (m) return m[1]; }
+    return null;
+  }
+
+  /* ── Scramble reveal animation ── */
+  function scramble(el, finalText, duration) {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const pass  = new Set(['/', ':', '-', '.', '?', '=', '&', '_', '#', ' ']);
+    let start = null;
+    (function frame(ts) {
+      if (!start) start = ts;
+      const p = Math.min((ts - start) / duration, 1);
+      const done = Math.floor(p * finalText.length);
+      el.textContent = [...finalText].map((c, i) =>
+        i < done || pass.has(c) ? c : chars[Math.floor(Math.random() * chars.length)]
+      ).join('');
+      if (p < 1) requestAnimationFrame(frame);
+      else el.textContent = finalText;
+    })(performance.now());
+  }
+
+  /* ── Panel config ── */
+  const cfg = {
+    chat:     { badge: '💬 Support Chat',   cls: 'b-indigo', title: 'Chat with Support',    sub: 'Your live session is shared with the support team',        action: 'Start Chat' },
+    question: { badge: '❓ Ask a Question', cls: 'b-cyan',   title: 'Submit a Question',    sub: 'Attach session context so we can help you faster',          action: 'Submit Question' },
+    error:    { badge: '⚠ Report Error',   cls: 'b-red',    title: 'Report an Error',      sub: 'A session replay will be attached to speed up debugging',   action: 'Send Error Report' },
+  };
+
+  let curType = null, sessURL = null, sessID = null, apiOpen = false;
+
+  /* ── Open panel ── */
+  function openPanel(type) {
+    curType = type;
+    const c = cfg[type];
+
+    const badge = document.getElementById('p-badge');
+    badge.textContent = c.badge;
+    badge.className = 'badge ' + c.cls;
+    document.getElementById('p-title').textContent = c.title;
+    document.getElementById('p-sub').textContent   = c.sub;
+    document.getElementById('sub-btn').textContent = c.action;
+
+    const urlEl = document.getElementById('sess-url');
+    const idEl  = document.getElementById('sess-id');
+    urlEl.textContent = 'Generating…';
+    idEl.textContent  = 'Generating…';
+    urlEl.className   = 'f-val';
+    idEl.className    = 'f-val';
+
+    document.getElementById('overlay').classList.add('open');
+    document.getElementById('panel').classList.add('open');
+
+    setTimeout(() => {
+      sessURL = getSessionURL();
+      sessID  = getSessionID();
+
+      if (!sessURL) {
+        /* Fullstory not loaded — use placeholder */
+        sessURL = 'https://app.fullstory.com/ui/o-XXXXX-na1/sessions/demo12:abc456xyz789';
+        sessID  = 'demo12:abc456xyz789';
+        urlEl.classList.add('amber');
+        idEl.classList.add('amber');
+        toast('⚠', 'Fullstory not detected — showing placeholder values', '#fcd34d');
+      }
+
+      scramble(urlEl, sessURL, 900);
+      setTimeout(() => scramble(idEl, sessID, 500), 220);
+      buildPayload(type);
+    }, 600);
+  }
+
+  function closePanel() {
+    document.getElementById('overlay').classList.remove('open');
+    document.getElementById('panel').classList.remove('open');
+  }
+
+  /* ── API payload ── */
+  function buildPayload(type) {
+    const payload = {
+      event_type: { chat: 'support_chat_initiated', question: 'support_question_submitted', error: 'error_report_submitted' }[type],
+      timestamp:  new Date().toISOString(),
+      user: { id: 'usr_j8f2k9l3', email: 'jordan@helix.io', name: 'Jordan Davies' },
+      session: { url: sessURL || '…', id: sessID || '…', page: window.location.href },
+      context: { app_version: '2.4.1', viewport: window.innerWidth + 'x' + window.innerHeight },
+    };
+    document.getElementById('api-payload').innerHTML = highlight(JSON.stringify(payload, null, 2));
+  }
+
+  function highlight(json) {
+    return json
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/"([^"]+)":/g,  '<span class="jk">"$1"</span>:')
+      .replace(/: "([^"]*)"/g, ': <span class="js">"$1"</span>')
+      .replace(/: (\d+)/g,     ': <span class="jn">$1</span>');
+  }
+
+  function toggleApi() {
+    apiOpen = !apiOpen;
+    document.getElementById('api-col').classList.toggle('open', apiOpen);
+    document.getElementById('chev').classList.toggle('open', apiOpen);
+  }
+
+  /* ── Copy ── */
+  function doCopy(id, btn) {
+    const text = document.getElementById(id).textContent;
+    if (!text || text === 'Generating…') return;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '✓ Copied'; btn.classList.add('ok');
+      toast('✓', 'Copied to clipboard', '#6ee7b7');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('ok'); }, 2200);
+    }).catch(() => toast('✕', 'Clipboard access denied', '#fca5a5'));
+  }
+
+  /* ── Integrations ── */
+  function sendTo(name) {
+    toast('→', `Session URL sent to ${name}`, '#93c5fd');
+  }
+
+  /* ── Submit ── */
+  document.getElementById('sub-btn').addEventListener('click', () => {
+    const msgs = {
+      chat:     'Support chat opened with session attached',
+      question: 'Question submitted — session replay included',
+      error:    'Error report filed with full session context',
+    };
+    toast('✓', msgs[curType] || 'Submitted!', '#6ee7b7');
+    closePanel();
+  });
+
+  /* ── Toast ── */
+  function toast(icon, msg, color) {
+    const wrap = document.getElementById('toasts');
+    const el   = document.createElement('div');
+    el.className = 'toast';
+    el.innerHTML = `<span>${icon}</span><span style="color:${color || '#9ca3af'}">${msg}</span>`;
+    wrap.prepend(el);
+    setTimeout(() => {
+      el.classList.add('out');
+      el.addEventListener('animationend', () => el.remove(), { once: true });
+    }, 3200);
+  }
+</script>
+</body>
+</html>
