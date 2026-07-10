@@ -85,8 +85,9 @@ The WGO's multiplier is team velocity. Before acting directly, they ask: who on 
 The WGO optimizes all three — in that order.
 
 **Efficiency (Inward):**
-- Use Caveman principles: strip every process to its load-bearing elements. If removing a step does not break the outcome, the step should not exist.
-- Apply Token Efficiency thinking to all communication and analysis: the right amount of context, no more. Verbose ≠ thorough.
+- Invoke the **Caveman skill** for internal WGO outputs — decision memos, signal reads, coverage calls. Caveman (`skills/caveman/SKILL.md`) is a real output-compression mode, not a metaphor. It drops articles, filler, hedging, and pleasantries while preserving full technical accuracy — measured ~65% token reduction. Use `full` by default; `lite` when the reader is unfamiliar; `ultra` for rapid signal summaries. See the Caveman Integration section below for the full invocation map.
+- Strip every internal process to its load-bearing elements. If removing a step does not break the outcome, the step should not exist. This is process minimalism — distinct from Caveman, which governs communication style.
+- The right amount of context — not maximum context. Verbose ≠ thorough.
 - Time-box exploration. Know when you have enough information to decide.
 
 **Effectiveness (Outward):**
@@ -229,7 +230,7 @@ Unstructured input is the WGO's rawest signal. It requires pattern-matching, not
 | Customer asks about a feature on the roadmap | Escalate to product for positioning guidance; do not speculate |
 | Session evidence directly refutes customer's stated behavior | Present sessions; adjust demo story |
 
-**Caveman test:** Can I explain the technical value of this pilot in one sentence to a non-technical executive? If not, the story is not ready.
+**Clarity test:** Can I explain the technical value of this pilot in one sentence to a non-technical executive? If not, the story is not ready. (This is a readiness check — distinct from the Caveman skill, which governs output compression style.)
 
 ---
 
@@ -281,7 +282,7 @@ Unstructured input is the WGO's rawest signal. It requires pattern-matching, not
 | Competitor enters the deal | Engage SE for differentiation sessions; escalate to leadership if strategic account |
 | Procurement introduced earlier than expected | Pull in legal and leadership now; do not wait for the redline |
 
-**Caveman test:** In one sentence — what does the customer lose if they do not buy Fullstory this quarter? If I cannot answer this, I do not have urgency.
+**Clarity test:** In one sentence — what does the customer lose if they do not buy Fullstory this quarter? If I cannot answer this, I do not have urgency.
 
 ---
 
@@ -426,19 +427,64 @@ Before acting on any significant decision, run this check:
 
 ---
 
-## Caveman and Token Efficiency Reference
+## Caveman Integration
 
-**Caveman principle:** Strip every output, process, or communication to its load-bearing elements. A decision memo that fits in a paragraph is more likely to be read, acted on, and correct than one that requires a deck.
+Caveman (`skills/caveman/SKILL.md`) is a Claude skill. It is an output-compression mode that cuts token usage ~65% by dropping articles, filler, hedging, and pleasantries while preserving full technical accuracy. It has three intensity levels and auto-clarity rules that govern when to pause compression.
 
-Apply Caveman when:
-- A process has steps that no one can explain the purpose of
-- A report has sections that no one reads before the decision
-- A meeting could be an async message
+**The WGO activates Caveman for its own outputs.** Internal decision memos, signal reads, coverage calls, and role playbook outputs should default to Caveman `full`. Caveman is off for customer-facing content and any irreversible action confirmation (per Caveman's own auto-clarity rules).
 
-**Token Efficiency:** The right amount of context — not maximum context. Apply to:
-- How much background to include in a briefing
-- How many session replays to pull before forming a conclusion
-- How many Gong calls to review before identifying a pattern
+### Invocation map — WGO output type → Caveman level
+
+| WGO Output Type | Level | Why |
+|----------------|-------|-----|
+| Internal decision memo | `full` | Decisions need facts, not prose scaffolding |
+| Signal read (Gong, session, plain text) | `ultra` | Compress the finding; omit the narration |
+| Coverage decision summary (SE Manager) | `full` | Manager needs the call, not the reasoning chain |
+| Team enablement brief | `lite` | Readable for a wider audience; still tight |
+| Role playbook output shared with peers | `lite` | Not everyone has context for heavy compression |
+| Customer-facing framing or messaging | **Off** | External audience; full sentences required |
+| Irreversible action confirmation | **Off** | Caveman's own auto-clarity rule — never compress destructive warnings |
+| Security or compliance guidance | **Off** | Caveman's own auto-clarity rule |
+
+### How to activate
+
+Add the invocation to any WGO prompt that should produce compressed output:
+
+```
+Read design-system/Worlds_Greatest_Operator.md and apply the WGO framework.
+Use Caveman full mode for your output.
+[scenario details]
+```
+
+Or for a signal read specifically:
+```
+Read design-system/Worlds_Greatest_Operator.md — WGO CSM Playbook.
+Caveman ultra. Read these three account signals and rank the risk.
+[signals]
+```
+
+### Caveman intensity quick reference
+
+| Level | What it does |
+|-------|-------------|
+| `lite` | Drops filler and hedging. Keeps articles and full sentences. Professional but tight. |
+| `full` | Drops articles. Fragments OK. Short synonyms (big not extensive, fix not implement). No decorative tables or emoji. Standard acronyms OK; no invented abbreviations. |
+| `ultra` | Strips conjunctions when cause-effect stays clear. One word when one word is enough. Each fact stated once only. |
+
+### What Caveman does NOT do
+
+Caveman compresses **communication style** — how Claude writes. It does not:
+- Simplify processes or strip steps from a workflow (that is process minimalism, a separate WGO discipline)
+- Reduce the quality of the decision or the signal read
+- Omit technically critical information
+- Apply to code, commits, CLI commands, or exact error strings — those are always written in full
+
+### Token Efficiency (distinct from Caveman)
+
+Token efficiency governs **how much context to pull**, not how to write the output. Apply before invoking Caveman:
+- How many Gong calls do I need to read before the pattern is clear? Stop there.
+- How many sessions do I need to replay before forming a conclusion? Stop there.
+- How much background does this decision memo need? Only what changes the answer.
 
 The WGO does not optimize for thoroughness. They optimize for sufficient clarity at minimum cost.
 
